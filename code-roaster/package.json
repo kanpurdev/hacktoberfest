@@ -1,10 +1,14 @@
 {
   "name": "code-roaster",
   "displayName": "Code Roaster 🔥",
-  "description": "Roasts your code like a comedian but actually helps you improve it",
-  "version": "0.0.1",
-  "engines": { "vscode": "^1.85.0" },
-  "categories": ["Other"],
+  "description": "Roasts your code so hard you'll question your career — but actually helps you improve it",
+  "version": "0.2.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
   "activationEvents": [],
   "main": "./src/extension.js",
   "contributes": {
@@ -16,6 +20,10 @@
       {
         "command": "code-roaster.roastSelection",
         "title": "🔥 Roast Selected Code"
+      },
+      {
+        "command": "code-roaster.setRoastLevel",
+        "title": "🔥 Set Roast Level"
       }
     ],
     "menus": {
@@ -37,9 +45,24 @@
         },
         "codeRoaster.roastLevel": {
           "type": "string",
-          "enum": ["mild", "medium", "savage"],
+          "enum": [
+            "mild",
+            "medium",
+            "spicy",
+            "savage",
+            "nuclear",
+            "existential-crisis"
+          ],
           "default": "medium",
-          "description": "How savage should the roast be?"
+          "enumDescriptions": [
+            "😊 Gentle jabs — like a disappointed but loving parent",
+            "🔥 Stand-up comedy roast — funny and helpful",
+            "🌶️ WWE commentary — over the top and dramatic",
+            "💀 Gordon Ramsay mode — absolutely brutal",
+            "☢️ Psychological warfare — your code AND soul get roasted",
+            "🕳️ Existential Crisis — may cause career changes"
+          ],
+          "description": "How savage should the roast be? Choose wisely."
         }
       }
     }
@@ -52,6 +75,7 @@
     "@types/vscode": "^1.85.0"
   },
   "dependencies": {
+    "@vscode/vsce": "^4.0.0",
     "openai": "^4.0.0"
   }
 }
