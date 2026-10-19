@@ -49,8 +49,23 @@ Ctrl+Shift+P -> "Set Roast Level"
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `codeRoaster.apiKey` | `""` | Your OpenAI API Key |
-| `codeRoaster.roastLevel` | `"medium"` | Default roast level: `mild` / `medium` / `spicy` / `savage` / `nuclear` / `existential-crisis` |
+| `codeRoaster.apiKey` | `""` | Your OpenAI API Key (or active provider key) |
+| `codeRoaster.geminiApiKey` | `""` | Google Gemini API Key (free from Google AI Studio) |
+| `codeRoaster.roastLevel` | `"medium"` | `mild` / `medium` / `spicy` / `savage` / `nuclear` / `existential-crisis` |
+| `codeRoaster.provider` | `"openai"` | `openai` / `gemini` / `claude` / `openrouter` / `ollama` |
+| `codeRoaster.model` | `""` | Custom model override (e.g. `gpt-4o-mini`, `gemini-1.5-flash`) |
+| `codeRoaster.apiBaseUrl` | `""` | Custom API base URL (for Ollama or custom proxies) |
+
+## Highlights
+
+- 🎭 **Stand-up Comedian Webview Panel** with real-time roast scores and roast badges.
+- 🎙️ **Live Voice Readout** using Web Speech API with animated audio visualizer.
+- 🥁 **Web Audio Soundboard** featuring synthesized rimshot, fail horn, sizzle, and applause.
+- ⚔️ **Battle Diff Arena** with side-by-side comparison and interactive heat slider.
+- ⚡ **Redemption Arc** with one-click "Replace in Editor" to apply refactored clean code.
+- 🏆 **Hall of Shame Leaderboard** tracking your highest dumpster scores and past roasts.
+- 🚀 **Zero-Config Offline Mode** with heuristic code smell detector if running without an API key.
+- 🌶️ **Status Bar Shortcut** to quickly toggle roast level or trigger roasts anytime.
 
 ## 🎨 UI Features
 

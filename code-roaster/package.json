@@ -1,37 +1,175 @@
 {
   "name": "code-roaster",
   "displayName": "Roast My Code",
-  "description": "A wildly overengineered code roaster with savage roast levels and a premium result panel",
+  "description": "A wildly overengineered code roaster with savage roast levels, Gemini/OpenAI multi-AI support, speech audio, and a premium result stage",
   "version": "0.2.0",
-  "engines": { "vscode": "^1.85.0" },
-  "categories": ["Other"],
+  "publisher": "kanpurai",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kanpurdev/hacktoberfest.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Linters",
+    "Education"
+  ],
+  "keywords": [
+    "roast",
+    "comedy",
+    "ai",
+    "openai",
+    "gemini",
+    "humor",
+    "code-review",
+    "linter"
+  ],
+  "icon": "media/icon.png",
   "activationEvents": [
     "onCommand:code-roaster.roastMyCode",
     "onCommand:code-roaster.roastSelection",
-    "onCommand:code-roaster.setRoastLevel"
+    "onCommand:code-roaster.setRoastLevel",
+    "onCommand:codeRoaster.roastCode",
+    "onCommand:codeRoaster.roastSelection",
+    "onCommand:codeRoaster.setApiKey",
+    "onCommand:codeRoaster.setGeminiKey",
+    "onCommand:codeRoaster.setRoastLevel",
+    "onCommand:codeRoaster.clearHistory"
   ],
-  "main": "./src/extension.js",
+  "main": "./dist/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+    "watch": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --watch",
+    "package": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run compile",
+    "test": "esbuild ./test/roaster.test.ts --bundle --outfile=dist/test.js --platform=node && node --test dist/test.js && npm run typecheck"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@vscode/vsce": "^4.0.0",
+    "openai": "^4.0.0"
+  },
   "contributes": {
     "commands": [
       {
         "command": "code-roaster.roastMyCode",
-        "title": "Roast My Code"
+        "title": "🔥 Roast My Code",
+        "category": "Code Roaster",
+        "icon": "$(flame)"
       },
       {
         "command": "code-roaster.roastSelection",
-        "title": "🔥 Roast Selected Code"
+        "title": "🔥 Roast Selected Code",
+        "category": "Code Roaster",
+        "icon": "$(flame)"
       },
       {
         "command": "code-roaster.setRoastLevel",
-        "title": "🔥 Set Roast Level"
+        "title": "🔥 Set Roast Level",
+        "category": "Code Roaster",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "codeRoaster.roastCode",
+        "title": "Roast My Code",
+        "category": "Code Roaster",
+        "icon": "$(flame)"
+      },
+      {
+        "command": "codeRoaster.roastSelection",
+        "title": "🔥 Roast Selected Code",
+        "category": "Code Roaster",
+        "icon": "$(flame)"
+      },
+      {
+        "command": "codeRoaster.setApiKey",
+        "title": "Set API Key",
+        "category": "Code Roaster",
+        "icon": "$(key)"
+      },
+      {
+        "command": "codeRoaster.setGeminiKey",
+        "title": "Set Google Gemini Key",
+        "category": "Code Roaster",
+        "icon": "$(key)"
+      },
+      {
+        "command": "codeRoaster.setRoastLevel",
+        "title": "Set Roast Level",
+        "category": "Code Roaster",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "codeRoaster.clearHistory",
+        "title": "Clear Roast History",
+        "category": "Code Roaster",
+        "icon": "$(trash)"
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "code-roaster.roastMyCode"
+        },
+        {
+          "command": "code-roaster.roastSelection",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "code-roaster.setRoastLevel"
+        },
+        {
+          "command": "codeRoaster.roastCode"
+        },
+        {
+          "command": "codeRoaster.roastSelection",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "codeRoaster.setApiKey"
+        },
+        {
+          "command": "codeRoaster.setGeminiKey"
+        },
+        {
+          "command": "codeRoaster.setRoastLevel"
+        },
+        {
+          "command": "codeRoaster.clearHistory"
+        }
+      ],
       "editor/context": [
         {
           "command": "code-roaster.roastSelection",
           "when": "editorHasSelection",
           "group": "navigation"
+        },
+        {
+          "command": "codeRoaster.roastSelection",
+          "when": "editorHasSelection",
+          "group": "1_modification@99"
+        },
+        {
+          "command": "codeRoaster.roastCode",
+          "when": "!editorHasSelection",
+          "group": "1_modification@99"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "codeRoaster.roastCode",
+          "group": "navigation",
+          "when": "editorTextFocus"
         }
       ]
     },
@@ -41,7 +179,17 @@
         "codeRoaster.apiKey": {
           "type": "string",
           "default": "",
-          "description": "Your OpenAI API Key"
+          "description": "Your API Key for active provider (or general fallback). Can also be saved via UI or 'Code Roaster: Set API Key'."
+        },
+        "codeRoaster.geminiApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your Google Gemini API Key. Can be obtained free from Google AI Studio (aistudio.google.com)."
+        },
+        "codeRoaster.openaiApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your OpenAI API Key."
         },
         "codeRoaster.roastLevel": {
           "type": "string",
@@ -53,7 +201,6 @@
             "nuclear",
             "existential-crisis"
           ],
-          "default": "medium",
           "enumDescriptions": [
             "😊 Gentle jabs — like a disappointed but loving parent",
             "🔥 Stand-up comedy roast — funny and helpful",
@@ -62,20 +209,32 @@
             "☢️ Psychological warfare — your code AND soul get roasted",
             "🕳️ Existential Crisis — may cause career changes"
           ],
+          "default": "medium",
           "description": "How savage should the roast be? Choose wisely."
+        },
+        "codeRoaster.provider": {
+          "type": "string",
+          "enum": [
+            "openai",
+            "gemini",
+            "claude",
+            "openrouter",
+            "ollama"
+          ],
+          "default": "openai",
+          "description": "AI provider for generating roasts."
+        },
+        "codeRoaster.model": {
+          "type": "string",
+          "default": "",
+          "description": "Optional custom model identifier (leave blank for default: gpt-4o-mini, gemini-1.5-flash, claude-3-5-haiku-20241022, or llama3)."
+        },
+        "codeRoaster.apiBaseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Custom API base URL (e.g. http://localhost:11434/v1 for Ollama, or custom OpenAI proxy)."
         }
       }
     }
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "test": "node ./test/extension.test.js"
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.85.0"
-  },
-  "dependencies": {
-    "@vscode/vsce": "^4.0.0",
-    "openai": "^4.0.0"
   }
 }

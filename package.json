@@ -1,60 +1,22 @@
 {
-  "name": "code-roaster",
+  "name": "code-roaster-workspace",
   "displayName": "Code Roaster 🔥",
-  "description": "Roasts your code like a comedian but actually helps you improve it",
-  "version": "0.0.1",
-  "engines": { "vscode": "^1.85.0" },
-  "categories": ["Other"],
-  "activationEvents": [],
-  "publisher": "kanpurdev",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kanpurdev/hacktoberfest.git"
-  },
+  "version": "0.2.0",
+  "private": true,
+  "workspaces": [
+    "code-roaster"
+  ],
   "bin": {
-    "code-roaster": "./src/cli.js"
-  },
-  "main": "./src/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "code-roaster.roastMyCode",
-        "title": "🔥 Roast My Code"
-      },
-      {
-        "command": "code-roaster.roastSelection",
-        "title": "🔥 Roast Selected Code"
-      }
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "command": "code-roaster.roastSelection",
-          "when": "editorHasSelection",
-          "group": "navigation"
-        }
-      ]
-    },
-    "configuration": {
-      "title": "Code Roaster",
-      "properties": {
-        "codeRoaster.apiKey": {
-          "type": "string",
-          "default": "",
-          "description": "Your OpenAI API Key"
-        },
-        "codeRoaster.roastLevel": {
-          "type": "string",
-          "enum": ["mild", "medium", "savage"],
-          "default": "medium",
-          "description": "How savage should the roast be?"
-        }
-      }
-    }
+    "code-roaster": "./cli.js"
   },
   "scripts": {
-    "start": "node ./src/cli.js",
-    "test": "node ./test/extension.test.js"
+    "start": "node ./cli.js",
+    "compile": "npm --prefix code-roaster run compile",
+    "watch": "npm --prefix code-roaster run watch",
+    "build": "npm --prefix code-roaster run build",
+    "package": "npm --prefix code-roaster run package",
+    "typecheck": "npm --prefix code-roaster run typecheck",
+    "test": "npm --prefix code-roaster run test"
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0"

@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Extension (Code Roaster)",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/code-roaster"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/code-roaster/dist/**/*.js"
+      ],
+      "preLaunchTask": "compile-code-roaster"
+    }
+  ]
+}
